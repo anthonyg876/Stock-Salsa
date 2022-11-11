@@ -32,15 +32,41 @@ document.addEventListener("DOMContentLoaded", () => {
         createAccountForm.classList.add("form--hidden");
     });
 
-    /*
+    
     loginForm.addEventListener("submit", e => {
         e.preventDefault();
+        const form = {
+            email: document.querySelector("#loginUsername"),
+            password: document.querySelector("#loginPassword")
+        };
 
         // Perform your AJAX/Fetch login
-
-        setFormMessage(loginForm, "error", "Invalid username/password combination");
+    
+        fetch("http://localhost:8080/api/v1/account/login", {
+            method: "POST",
+            headers: {
+                Accept: "application/json, text/plain, */*",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify([form.email.value, form.password.value]),
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data);
+            if (data.error) {
+                setFormMessage(loginForm, "error", "Invalid username/password combination");
+            }
+            else {
+                window.open(
+                    "menu.html"
+                );
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+        });
     });
-    */
+    
 
     document.querySelectorAll(".form__input").forEach(inputElement => {
         inputElement.addEventListener("blur", e => {
@@ -55,39 +81,36 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-const form = {
-    email: document.querySelector("#loginUsername"),
-    password: document.querySelector("#loginPassword"),
-    submit: document.querySelector("#loginSubmit")
-};
 
-let button = form.submit.addEventListener("click", (e) => {
-    e.preventDefault();
+
+
+// let button = form.submit.addEventListener("click", (e) => {
+//     e.preventDefault();
     
-    fetch(URL, {
-        method: "POST",
-        headers: {
-            Accept: "application/json, text/plain, */*",
-            "Content-Type": "application/json",
-          },
-        body: JSON.stringify({
-            email: form.email.value,
-            password: form.password.value
-        }),
-    })
-    .then((response) => response.json())
-    .then((data) => {
-        console.log(data);
-        if (data.error) {
-            setFormMessage(loginForm, "error", "Invalid username/password combination");
-        }
-        else {
-            window.open(
-                "menu.html"
-            );
-        }
-    })
-    .catch((err) => {
-        console.log(err);
-    });
-});
+//     fetch(URL, {
+//         method: "POST",
+//         headers: {
+//             Accept: "application/json, text/plain, */*",
+//             "Content-Type": "application/json",
+//           },
+//         body: JSON.stringify({
+//             email: form.email.value,
+//             password: form.password.value
+//         }),
+//     })
+//     .then((response) => response.json())
+//     .then((data) => {
+//         console.log(data);
+//         if (data.error) {
+//             setFormMessage(loginForm, "error", "Invalid username/password combination");
+//         }
+//         else {
+//             window.open(
+//                 "menu.html"
+//             );
+//         }
+//     })
+//     .catch((err) => {
+//         console.log(err);
+//     });
+// });
