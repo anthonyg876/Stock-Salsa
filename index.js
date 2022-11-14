@@ -76,11 +76,14 @@ document.addEventListener("DOMContentLoaded", () => {
             password: document.querySelector("#signupPassword"),
             firstName: document.querySelector("#firstName"),
             lastName: document.querySelector("#lastName"),
-            passwordConfirm: document.querySelector("signupPasswordConfirm")
+            passwordConfirm: document.querySelector("#signupPasswordConfirm")
         };
+        console.log(form.password.value);
+        console.log(form.passwordConfirm.value);
         
         if (form.password.value != form.passwordConfirm.value) {
             setFormMessage(createAccountForm, "error", "Both passwords do not match");
+            console.log("The Passwords didn't match");
         }
         
         else {
@@ -92,7 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                userName: form.email.value, 
+                email: form.email.value, 
                 firstName: form.firstName.value,
                 lastName: form.lastName.value}),
         })
