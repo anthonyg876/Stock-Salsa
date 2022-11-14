@@ -67,6 +67,69 @@ document.addEventListener("DOMContentLoaded", () => {
             console.log(err);
         });
     });
+
+    createAccountForm.addEventListener("submit", e => {
+        e.preventDefault();
+        const form = {
+            email: document.querySelector("#signupEmail"),
+            userName: document.querySelector("#signupUsername"),
+            password: document.querySelector("#signupPassword"),
+            firstName: document.querySelector("#firstName"),
+            lastName: document.querySelector("#lastName"),
+            passwordConfirm: document.querySelector("signupPasswordConfirm")
+        };
+        
+        if (form.password.value != form.passwordConfirm.value) {
+            setFormMessage(createAccountForm, "error", "Both passwords do not match");
+        }
+        
+        else {
+        //create user
+        fetch("http://localhost:8080/api/v1/account/login", {
+            method: "POST",
+            headers: {
+                Accept: "application/json, text/plain, */*",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                userName: form.email.value, 
+                firstName: form.firstName.value,
+                lastName: form.lastName.value}),
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data);
+            if (data.error) {
+            }
+            else {
+                setFormMessage(createAccountForm, "error", "Something went wrong");
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+
+        //create account
+        fetch("http://localhost:8080/api/v1/account/login", {
+            method: "POST",
+            headers: {
+                Accept: "application/json, text/plain, */*",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                userName: form.userName.value, 
+                password: form.password.value,
+                held_by: form.email.value}),
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+    }
+    });
     
 
     document.querySelectorAll(".form__input").forEach(inputElement => {
