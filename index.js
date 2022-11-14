@@ -100,9 +100,9 @@ document.addEventListener("DOMContentLoaded", () => {
         .then((data) => {
             console.log(data);
             if (data.error) {
+                setFormMessage(createAccountForm, "error", "Something went wrong");
             }
             else {
-                setFormMessage(createAccountForm, "error", "Something went wrong");
             }
         })
         .catch((err) => {
@@ -124,6 +124,7 @@ document.addEventListener("DOMContentLoaded", () => {
         .then((response) => response.json())
         .then((data) => {
             console.log(data);
+            setFormMessage(createAccountForm, "success", "Account successfully created!");
         })
         .catch((err) => {
             console.log(err);
