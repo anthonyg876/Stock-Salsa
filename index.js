@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
         
         else {
         //create user
-        fetch("http://localhost:8080/api/v1/account/login", {
+        fetch("http://localhost:8080/api/v1/user/addUser", {
             method: "POST",
             headers: {
                 Accept: "application/json, text/plain, */*",
@@ -110,7 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         //create account
-        fetch("http://localhost:8080/api/v1/account/login", {
+        fetch("http://localhost:8080/api/v1/account/createAccount", {
             method: "POST",
             headers: {
                 Accept: "application/json, text/plain, */*",
