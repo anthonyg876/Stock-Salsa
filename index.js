@@ -57,9 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 setFormMessage(loginForm, "error", "Invalid username/password combination");
             }
             else {
-                window.open(
-                    "menu.html"
-                );
+                window.location.href="menu.html";
             }
         })
         .catch((err) => {
