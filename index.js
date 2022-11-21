@@ -66,71 +66,97 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+    // createAccountForm.addEventListener("submit", e => {
+    //     e.preventDefault();
+    //     const form = {
+    //         email: document.querySelector("#signupEmail"),
+    //         userName: document.querySelector("#signupUsername"),
+    //         password: document.querySelector("#signupPassword"),
+    //         firstName: document.querySelector("#firstName"),
+    //         lastName: document.querySelector("#lastName"),
+    //         passwordConfirm: document.querySelector("#signupPasswordConfirm")
+    //     };
+    //     console.log(form.password.value);
+    //     console.log(form.passwordConfirm.value);
+        
+    //     if (form.password.value != form.passwordConfirm.value) {
+    //         setFormMessage(createAccountForm, "error", "Both passwords do not match");
+    //         console.log("The Passwords didn't match");
+    //     }
+        
+    //     else {
+    //     //create user
+    //     fetch("http://localhost:8080/api/v1/user/addUser", {
+    //         method: "POST",
+    //         headers: {
+    //             Accept: "application/json, text/plain, */*",
+    //             "Content-Type": "application/json",
+    //         },
+    //         body: JSON.stringify({
+    //             email: form.email.value, 
+    //             firstName: form.firstName.value,
+    //             lastName: form.lastName.value}),
+    //     })
+    //     .then((response) => response.json())
+    //     .then((data) => {
+    //         console.log(data);
+    //         if (data.error) {
+    //             setFormMessage(createAccountForm, "error", "Something went wrong");
+    //         }
+    //         else {
+    //         }
+    //     })
+    //     .catch((err) => {
+    //         console.log(err);
+    //     });
+
+    //     //create account
+    //     fetch("http://localhost:8080/api/v1/account/createAccount", {
+    //         method: "POST",
+    //         headers: {
+    //             Accept: "application/json, text/plain, */*",
+    //             "Content-Type": "application/json",
+    //         },
+    //         body: JSON.stringify({
+    //             userName: form.userName.value, 
+    //             password: form.password.value,
+    //             held_by: form.email.value}),
+    //     })
+    //     .then((response) => response.json())
+    //     .then((data) => {
+    //         console.log(data);
+    //         setFormMessage(createAccountForm, "success", "Account successfully created!");
+    //     })
+    //     .catch((err) => {
+    //         console.log(err);
+    //     });
+    // }
+    // });
+
     createAccountForm.addEventListener("submit", e => {
         e.preventDefault();
-        const form = {
-            email: document.querySelector("#signupEmail"),
-            userName: document.querySelector("#signupUsername"),
-            password: document.querySelector("#signupPassword"),
-            firstName: document.querySelector("#firstName"),
-            lastName: document.querySelector("#lastName"),
-            passwordConfirm: document.querySelector("#signupPasswordConfirm")
-        };
-        console.log(form.password.value);
-        console.log(form.passwordConfirm.value);
-        
-        if (form.password.value != form.passwordConfirm.value) {
-            setFormMessage(createAccountForm, "error", "Both passwords do not match");
-            console.log("The Passwords didn't match");
-        }
-        
-        else {
-        //create user
-        fetch("http://localhost:8080/api/v1/user/addUser", {
-            method: "POST",
-            headers: {
-                Accept: "application/json, text/plain, */*",
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                email: form.email.value, 
-                firstName: form.firstName.value,
-                lastName: form.lastName.value}),
+    
+        fetch("http://localhost:8080/api/v1/stockPrices/getPrices/AAPL", {
+            method: "GET"
         })
         .then((response) => response.json())
         .then((data) => {
-            console.log(data);
+            let i = 0;
+            while (i < 10) {
+                console.log(data[i]);
+                i++;
+            }
             if (data.error) {
-                setFormMessage(createAccountForm, "error", "Something went wrong");
+                
             }
             else {
+                //display AMCHART
+    
             }
         })
         .catch((err) => {
             console.log(err);
         });
-
-        //create account
-        fetch("http://localhost:8080/api/v1/account/createAccount", {
-            method: "POST",
-            headers: {
-                Accept: "application/json, text/plain, */*",
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                userName: form.userName.value, 
-                password: form.password.value,
-                held_by: form.email.value}),
-        })
-        .then((response) => response.json())
-        .then((data) => {
-            console.log(data);
-            setFormMessage(createAccountForm, "success", "Account successfully created!");
-        })
-        .catch((err) => {
-            console.log(err);
-        });
-    }
     });
     
 
