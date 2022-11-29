@@ -1,3 +1,5 @@
+var cleanData = [];
+
 document.addEventListener("DOMContentLoaded", () => {
     const stockSearch = document.querySelector("#search");
 
@@ -7,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function getPrices() {
-    var cleanData = [];
+    cleanData = [];
 
 // document.querySelector("#searchButton").addEventListener("click", e => {
     var id = document.querySelector("#searchName");
@@ -30,7 +32,15 @@ function getPrices() {
                     "adjClose": data[i].adjClosed,
                     "volume": data[i].volume
                 };
-                cleanData.push(obj);
+                cleanData.push({
+                    Date: date,
+                    Open: data[i].open,
+                    High: data[i].high,
+                    Low: data[i].low,
+                    Close: data[i].adjClosed,
+                    Volume: data[i].volume
+                })
+                //cleanData.push(obj);
                 i++;
             }
         console.log(cleanData);
