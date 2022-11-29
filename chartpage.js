@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
 function maybeDisposeRoot(divId) {
     am5.array.each(am5.registry.rootElements, function (root) {
       if (root.dom.id == divId) {
-        root.container.children.clear();
+        toolbar.dispose();
         root.dispose();
       }
     });
