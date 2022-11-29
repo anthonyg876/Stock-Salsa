@@ -8,6 +8,14 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+function maybeDisposeRoot(divId) {
+    am5.array.each(am5.registry.rootElements, function (root) {
+      if (root.dom.id == divId) {
+        root.dispose();
+      }
+    });
+  };
+
 function getPrices() {
     cleanData = [];
 
@@ -50,6 +58,7 @@ function getPrices() {
 // Create root element
 // -------------------------------------------------------------------------------
 // https://www.amcharts.com/docs/v5/getting-started/#Root_element
+        maybeDisposeRoot("chartdiv");
         var root = am5.Root.new("chartdiv");
 
 
