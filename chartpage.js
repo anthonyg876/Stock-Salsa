@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
 function maybeDisposeRoot(divId) {
     am5.array.each(am5.registry.rootElements, function (root) {
       if (root.dom.id == divId) {
+        root.container.children.clear();
         root.dispose();
       }
     });
@@ -32,14 +33,7 @@ function getPrices() {
         let i = 0;
             while (i < data.length) {
                 const date = Date.parse(data[i].dateOfPrice);
-                const obj = {
-                    "dateOfPrice": date,
-                    "open": data[i].open,
-                    "high": data[i].high,
-                    "low": data[i].low,
-                    "adjClose": data[i].adjClosed,
-                    "volume": data[i].volume
-                };
+                
                 cleanData.push({
                     Date: date,
                     Open: data[i].open,
@@ -48,7 +42,7 @@ function getPrices() {
                     Close: data[i].adjClosed,
                     Volume: data[i].volume
                 })
-                //cleanData.push(obj);
+                
                 i++;
             }
         console.log(cleanData);
