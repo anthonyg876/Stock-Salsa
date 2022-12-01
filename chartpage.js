@@ -1,4 +1,5 @@
 var cleanData = [];
+var oldTool = null;
 
 document.addEventListener("DOMContentLoaded", () => {
     const stockSearch = document.querySelector("#search");
@@ -18,8 +19,6 @@ function maybeDisposeRoot(divId) {
 
 function getPrices() {
     cleanData = [];
-
-// document.querySelector("#searchButton").addEventListener("click", e => {
     var id = document.querySelector("#searchName");
     console.log(id.value);
     var request = "http://localhost:8080/api/v1/stockPrices/getPrices/" + id.value;
@@ -44,9 +43,9 @@ function getPrices() {
                 
                 i++;
             }
-        console.log(cleanData);
+        // console.log(cleanData);
     //make AMCHART
-    am5.ready(function() {
+    am5.ready(() => {
 
 // Create root element
 // -------------------------------------------------------------------------------
@@ -303,6 +302,16 @@ function getPrices() {
 // Stock toolbar
 // -------------------------------------------------------------------------------
 // https://www.amcharts.com/docs/v5/charts/stock/toolbar/
+
+        // Remove the top control bar each time when loading in a new chart.
+        var chartControl = document.getElementById("chartcontrols");
+        // console.log(chartControl.children);
+        var first = chartControl.firstElementChild;
+        while (first) {
+            first.remove();
+            first = chartControl.firstElementChild;
+        }
+        // console.log("2nd update: " + chartControl.children);
         var toolbar = am5stock.StockToolbar.new(root, {
             container: document.getElementById("chartcontrols"),
             stockChart: stockChart,
@@ -315,7 +324,7 @@ function getPrices() {
                 })
             ]
         })
-
+        oldTool = toolbar;
 
         var tooltip = am5.Tooltip.new(root, {
             getStrokeFromSprite: false,
