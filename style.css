@@ -77,3 +77,35 @@
   input#searchSymbol, input#searchName {
     width: 50%;
   }
+
+ nav{
+     display: flex;
+     position: relative;
+     left: 70%;
+     top: 0;
+     height: 80px;
+     width: 100%;
+     background-color: #f44336;
+     overflow: auto;
+     height: auto;
+ }
+
+ .left-links {
+     flex:1 1 200px;
+ }
+
+ .links {
+     display: inline-block;
+     text-align: center;
+     padding: 14px;
+     color: rgb(0, 0, 0);
+     text-decoration: none;
+     font-size: 17px;
+     font-weight: bolder;
+ }
+ .links:hover {
+     border-bottom: 2px solid #1d2624;
+ }
+ .selectedContainer{
+     border-bottom: 2px solid #1d2624;
+ }
