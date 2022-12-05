@@ -46,11 +46,10 @@ function getPrices() {
             let i = 0;
             while (i < data.length) {
                 const date = Date.parse(data[i].dateOfPrice);
-                const obj = {
-                    "dateOfPrice": date,
-                    "PC": data[i].PC,
-                };
-                cleanData.push(obj);
+                cleanData.push({
+                    Date: date,
+                    PC: data[i].PC
+                })
                 i++;
             }
 

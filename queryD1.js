@@ -1,32 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
+    //change querySelectors
     const stockSearch = document.querySelector("#search");
 
     stockSearch.addEventListener("submit", e => {
         e.preventDefault();
-        var id = document.querySelector("#searchName");
-        fetch("" + id, {
-            method: "GET"
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                let i = 0;
-                while (i < data.length) {
-                    var cleanData = [];
-                    const date = Date.parse(data[i].dateOfPrice);
-                    const obj = {
-                        "dateOfPrice": date,
-                        "DPC": data[i].DPC,
-                    };
-                    cleanData.push(obj);
-                    console.log(cleanData);
-                    i++;
-                }
-                //make AMCHART
-
-            })
-            .catch((err) => {
-                console.log(err);
-            });
     });
 });
 
@@ -46,11 +23,10 @@ function getPrices() {
             let i = 0;
             while (i < data.length) {
                 const date = Date.parse(data[i].dateOfPrice);
-                const obj = {
-                    "dateOfPrice": date,
-                    "DPC": data[i].DPC,
-                };
-                cleanData.push(obj);
+                cleanData.push({
+                    Date: date,
+                    DPC: data[i].DPC
+                })
                 i++;
             }
 
@@ -86,29 +62,6 @@ function getPrices() {
                     behavior: "none"
                 }));
                 cursor.lineY.set("visible", false);
-
-
-// Generate random data
-                var date = new Date();
-                date.setHours(0, 0, 0, 0);
-                var value = 100;
-
-                function generateData() {
-                    value = Math.round((Math.random() * 10 - 5) + value);
-                    am5.time.add(date, "day", 1);
-                    return {
-                        date: date.getTime(),
-                        value: value
-                    };
-                }
-
-                function generateDatas(count) {
-                    var data = [];
-                    for (var i = 0; i < count; ++i) {
-                        data.push(generateData());
-                    }
-                    return data;
-                }
 
 
 // Create axes

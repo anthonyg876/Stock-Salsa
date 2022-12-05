@@ -23,93 +23,12 @@
 <div class="stockPortfolioHeader">
     <h1 style="color: #3d3b3b">Select stocks and your desired query</h1>
 
-
-    <!-- Stock Query Selector -->
-    <div class="selectedContainer">
-        <div class="selectBox">
-            <div class="options-container">
-                <div class="option">
-                    <input
-                            type="radio"
-                            class="radio"
-                            id="automobiles"
-                            name="category"
-                    />
-                </div>
-
-                <div class="option">
-                    <input type="radio" class="radio" id="closingAverage" name="category">
-                    <label for="closingAverage" style="color: #ffffff">Average closing price</label>
-                </div>
-
-                <div class="option">
-                    <input type="radio" class="radio" id="volumeAverage" name="category">
-                    <label for="volumeAverage" style="color: #ffffff">Average daily volume</label>
-                </div>
-
-                <div class="option">
-                    <input type="radio" class="radio" id="52week" name="category">
-                    <label for="52week" style="color: #ffffff">52-week price change in selected stocks</label>
-                </div>
-
-                <div class="option">
-                    <input type="radio" class="radio" id="nasdaqPortfolio" name="category">
-                    <label for="nasdaqPortfolio" style="color: #ffffff">Stocks in portfolio that are a part of NASDAQ 100</label>
-                </div>
-
-                <div class="option">
-                    <input type="radio" class="radio" id="dow30Portfolio" name="category">
-                    <label for="dow30Portfolio" style="color: #ffffff">Stocks in portfolio that are a part of DOW 30</label>
-                </div>
-
-                <div class="option">
-                    <input type="radio" class="radio" id="dow50Portfolio" name="category">
-                    <label for="dow50Portfolio" style="color: #ffffff">Stocks in portfolio that are a part of DOW 50 Global</label>
-                </div>
-
-                <div class="option">
-                    <input type="radio" class="radio" id="winners" name="category">
-                    <label for="winners" style="color: #ffffff">5 Stocks that are Winners</label>
-                </div>
-
-                <div class="option">
-                    <input type="radio" class="radio" id="losers" name="category">
-                    <label for="losers" style="color: #ffffff">5 Stocks that are Losers</label>
-                </div>
-
-                <div class="option">
-                    <input type="radio" class="radio" id="movingAverage" name="category">
-                    <label for="movingAverage" style="color: #ffffff">30-day moving average of a selected stock</label>
-                </div>
-            </div>
-
-            <div class="selected">
-                Select A Query
-            </div>
-        </div>
-    </div>
-
+    <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
     <script src="portfolio.js"></script>
 
     <!-- Stock Table -->
-    <div class="tableWrapper">
-        <table>
-            <thead>
-            <tr>
-                <th>Stock Symbol</th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
-        <form>
-            <div class="input-row">
-                <label for="stockSymbol">Stock Symbol</label>
-                <input type="text" name="stockSymbol" id="stockSymbol" />
-            </div>
-            <button>Add Stock</button>
-        </form>
-    </div>
     <script>
         const formEl = document.querySelector("form");
         const tbodyEl = document.querySelector("tbody");
@@ -158,6 +77,14 @@
             <div class="avgClose-wrapper">
                 <button class="avgClose" id="avgClose" type="submit" onclick="getAvgClose()">Average Close</button>
             </div>
+            <div class="prices-wrapper">
+                <button class="prices" id="prices" type="submit" onclick="priceChanges()">Price Changes</button>
+            </div>
+            <div class="percentage-wrapper">
+                <button class="percentages" id="percentages" type="submit" onclick="percentageChanges()">Percentage Changes</button>
+            </div>
             <p id="message"></p>
+            <div class="chartdiv" id="chartdiv">
+            </div>
         </form>
     </div>

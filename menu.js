@@ -1,141 +1,273 @@
-const stocks = [
-    { name: 'AXP'},
-    { name: 'AMGN'},
-    { name: 'AAPL'},
-    { name: 'BA'},
-    { name: 'CAT'},
-    { name: 'CSCO'},
-    { name: 'CVX'},
-    { name: 'GS'},
-    { name: 'HD'},
-    { name: 'HON'},
-    { name: 'IBM'},
-    { name: 'INTC'},
-    { name: 'JNJ'},
-    { name: 'KO'},
-    { name: 'JPM'},
-    { name: 'MCD'},
-    { name: 'MMM'},
-    { name: 'MRK'},
-    { name: 'MSFT'},
-    { name: 'NKE'},
-    { name: 'PG'},
-    { name: 'TRV'},
-    { name: 'UNH'},
-    { name: 'CRM'},
-    { name: 'VZ'},
-    { name: 'V'},
-    { name: 'WBA'},
-    { name: 'WMT'},
-    { name: 'DIS'},
-    { name: 'DOW'},
-]
-
-const stockNames = [
-    { name: 'American Express Co'},
-    { name: 'Amgen Inc'},
-    { name: 'Apple Inc'},
-    { name: 'Boeing Co'},
-    { name: 'Caterpillar Inc'},
-    { name: 'Cisco Systems Inc'},
-    { name: 'Chevron Corp'},
-    { name: 'Goldman Sachs Group Inc'},
-    { name: 'Home Depot Inc'},
-    { name: 'Honeywell International Inc'},
-    { name: 'International Business Machines Corp'},
-    { name: 'Intel Corp'},
-    { name: 'Johnson & Johnson'},
-    { name: 'Coca-Cola Co'},
-    { name: 'JPMorgan Chase & Co'},
-    { name: 'McDonald\'s Corp'},
-    { name: '3M Co'},
-    { name: 'Merck & Co Inc'},
-    { name: 'Microsoft Corp'},
-    { name: 'Nike Inc'},
-    { name: 'Proctor & Gamble Co'},
-    { name: 'Travelers Companies Inc'},
-    { name: 'UnitedHealth Group Inc'},
-    { name: 'Salesforce Inc'},
-    { name: 'Verizon Communications Inc'},
-    { name: 'Visa Inc'},
-    { name: 'Walgreens Boots Alliance Inc'},
-    { name: 'Walmart Inc'},
-    { name: 'Walt Disney Co'},
-    { name: 'Dow Inc'},
-]
-
-const searchInput = document.querySelector('.input')
-
-searchInput.addEventListener("input", (e) => {
-    // inside, we will need to achieve a few things:
-    // 1. declare and assign the value of the event's target to a variable AKA whatever is typed in the search bar
-    let value = e.target.value
-
-    // 2. check: if input exists and if input is larger than 0
-    if (value && value.trim().length > 0){
-        clearList()
-        // 3. redefine 'value' to exclude white space and change input to all uppercase
-         value = value.trim().toUpperCase()
-        // 4. return the results only if the value of the search is included in the stock's symbol
-        setList(stocks.filter(stock => {
-            return stock.name.includes(value)
-        }))
-    } else {
-        // 5. return nothing
-        clearList()
-
+function dateConverter(date) {
+    let year = "";
+    let month = "";
+    let day = "";
+    for (let i = 0; i < date.length; ++i) {
+        if (i < 4) {
+            year += date[i];
+        }
+        if (i > 4 && i < 7) {
+            month += date[i];
+        }
+        if (i > 7 && i < 10) {
+            day += date[i];
+        }
     }
 
-})
-
-const clearButton = document.getElementById('clear')
-
-clearButton.addEventListener("click", () => {
-    clearList()
-})
-
-// creating and declaring a function called "setList"
-// setList takes in a param of "results"
-function setList(results){
-
-    for (const stock of results){
-        // creating a li element for each result item
-        const resultItem = document.createElement('li')
-
-        // adding a class to each item of the results
-        resultItem.classList.add('result-item')
-
-        // grabbing the name of the current point of the loop and adding the name as the list item's text
-        const text = document.createTextNode(stock.name)
-
-        // appending the text to the result item
-        resultItem.append(text)
-
-        // appending the result item to the list
-        list.append(resultItem)
+    switch (month) {
+        case "01":
+            month = "JAN";
+            break;
+        case "02":
+            month = "FEB";
+            break;
+        case "03":
+            month = "MAR";
+            break;
+        case "04":
+            month = "APR";
+            break;
+        case "05":
+            month = "MAY";
+            break;
+        case "06":
+            month = "JUN";
+            break;
+        case "07":
+            month = "JUL";
+            break;
+        case "08":
+            month = "AUG";
+            break;
+        case "09":
+            month = "SEP";
+            break;
+        case "10":
+            month = "OCT";
+            break;
+        case "11":
+            month = "NOV";
+            break;
+        case "12":
+            month = "DEC";
+            break;
+        default:
+            month = "JAN";
+            break;
     }
+    let resultDate = "" + day + "-" + month + "-" + year;
+    return resultDate;
+};
 
-    if (results.length === 0 ){
-        noResults()
+function totalTuples() {
+    const messageElement = document.getElementById("totalTuples");
+    fetch("http://localhost:8080/api/v1/stockPrices/totalTuples", {
+            method: "GET",
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data);
+            messageElement.innerHTML = "Total Tuples in Database: " + data;
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+};
+
+function top5DJI() {
+    const form = {
+        BeginDate: dateConverter(document.querySelector("#StartDate").value),
+        EndDate: dateConverter(document.querySelector("#EndDate").value),
+        Index: "DJI"
     }
+    console.log(form);
+    fetch("http://localhost:8080/api/v1/stockPrices/highestGrowingStocks", {
+            method: "POST",
+            headers: {
+                Accept: "application/json, text/plain, */*",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify([form.BeginDate, form.EndDate, form.Index]),
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data);
+            let sortedData = [];
+            for(let i = 0; i < data.length; ++i) {
+                sortedData.push({
+                    Name: data[i].nameOfStock,
+                    Growth: data[i].percentIncrease
+                })
+            }
+            console.log(sortedData);
+            const tbl = document.createElement("table");
+            tbl.id = "tableOne";
+            document.body.appendChild(tbl);
+            const tblBody = document.createElement("tbody");
+
+            // creating all cells
+            for (let i = 0; i < data.length; i++) {
+                // creates a table row
+                const row = document.createElement("tr");
+
+                // Create a <td> element and a text node, make the text
+                // node the contents of the <td>, and put the <td> at
+                // the end of the table row
+                const cell = document.createElement("td");
+                const cellText = document.createTextNode(sortedData[i].Name);
+                cell.appendChild(cellText);
+                row.appendChild(cell);
+                const cell2 = document.createElement("td");
+                const cell2Text = document.createTextNode(sortedData[i].Growth);
+                cell2.appendChild(cell2Text);
+                row.appendChild(cell2)
+
+                // add the row to the end of the table body
+                tblBody.appendChild(row);
+            }
+
+            // put the <tbody> in the <table>
+            tbl.appendChild(tblBody);
+            // appends <table> into <body>
+            document.body.appendChild(tbl);
+            // sets the border attribute of tbl to '2'
+            tbl.setAttribute("border", "2");
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+};
+
+function top5DJGT() {
+    const form = {
+        BeginDate: dateConverter(document.querySelector("#StartDate").value),
+        EndDate: dateConverter(document.querySelector("#EndDate").value),
+        Index: "DJGT"
+    }
+    console.log(form);
+    fetch("http://localhost:8080/api/v1/stockPrices/highestGrowingStocks", {
+            method: "POST",
+            headers: {
+                Accept: "application/json, text/plain, */*",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify([form.BeginDate, form.EndDate, form.Index]),
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data);
+            let sortedData = [];
+            for(let i = 0; i < data.length; ++i) {
+                sortedData.push({
+                    Name: data[i].nameOfStock,
+                    Growth: data[i].percentIncrease
+                })
+            }
+            console.log(sortedData);
+            const tbl = document.createElement("table");
+            tbl.id = "tableOne";
+            document.body.appendChild(tbl);
+            const tblBody = document.createElement("tbody");
+
+            // creating all cells
+            for (let i = 0; i < data.length; i++) {
+                // creates a table row
+                const row = document.createElement("tr");
+
+                // Create a <td> element and a text node, make the text
+                // node the contents of the <td>, and put the <td> at
+                // the end of the table row
+                const cell = document.createElement("td");
+                const cellText = document.createTextNode(sortedData[i].Name);
+                cell.appendChild(cellText);
+                row.appendChild(cell);
+                const cell2 = document.createElement("td");
+                const cell2Text = document.createTextNode(sortedData[i].Growth);
+                cell2.appendChild(cell2Text);
+                row.appendChild(cell2)
+
+                // add the row to the end of the table body
+                tblBody.appendChild(row);
+            }
+
+            // put the <tbody> in the <table>
+            tbl.appendChild(tblBody);
+            // appends <table> into <body>
+            document.body.appendChild(tbl);
+            // sets the border attribute of tbl to '2'
+            tbl.setAttribute("border", "2");
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+};
+
+function top5NDX() {
+    const form = {
+        BeginDate: dateConverter(document.querySelector("#StartDate").value),
+        EndDate: dateConverter(document.querySelector("#EndDate").value),
+        Index: "NDX"
+    }
+    console.log(form);
+    fetch("http://localhost:8080/api/v1/stockPrices/highestGrowingStocks", {
+            method: "POST",
+            headers: {
+                Accept: "application/json, text/plain, */*",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify([form.BeginDate, form.EndDate, form.Index]),
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data);
+            let sortedData = [];
+            for(let i = 0; i < data.length; ++i) {
+                sortedData.push({
+                    Name: data[i].nameOfStock,
+                    Growth: data[i].percentIncrease
+                })
+            }
+            console.log(sortedData);
+            const tbl = document.createElement("table");
+            tbl.id = "tableOne";
+            document.body.appendChild(tbl);
+            const tblBody = document.createElement("tbody");
+
+            // creating all cells
+            for (let i = 0; i < data.length; i++) {
+                // creates a table row
+                const row = document.createElement("tr");
+
+                // Create a <td> element and a text node, make the text
+                // node the contents of the <td>, and put the <td> at
+                // the end of the table row
+                const cell = document.createElement("td");
+                const cellText = document.createTextNode(sortedData[i].Name);
+                cell.appendChild(cellText);
+                row.appendChild(cell);
+                const cell2 = document.createElement("td");
+                const cell2Text = document.createTextNode(sortedData[i].Growth);
+                cell2.appendChild(cell2Text);
+                row.appendChild(cell2)
+
+                // add the row to the end of the table body
+                tblBody.appendChild(row);
+            }
+
+            // put the <tbody> in the <table>
+            tbl.appendChild(tblBody);
+            // appends <table> into <body>
+            document.body.appendChild(tbl);
+            // sets the border attribute of tbl to '2'
+            tbl.setAttribute("border", "2");
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+};
+
+function deleteTable() {
+    var removeTab = document.getElementById('tableOne');
+    var parentEl = removeTab.parentElement;
+    parentEl.removeChild(removeTab);
 }
-
-function clearList(){
-    list.innerHTML = ' '
-}
-
-function noResults(){
-    // create an element for the error; a list item ("li")
-    const error = document.createElement('li')
-    // adding a class name of "error-message" to our error element
-    error.classList.add('error-message')
-
-    // creating text for our element
-    const text = document.createTextNode('No results found. Sorry!')
-    // appending the text to our element
-    error.append(text)
-    // appending the error to our list element
-    list.append(error)
-}
-
-
