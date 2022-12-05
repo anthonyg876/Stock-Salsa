@@ -88,49 +88,6 @@ function dateConverterArray(date) {
         }
         resultArray[j] = resultDate;
     }
-    // switch (month) {
-    //     case "01":
-    //         month = "JAN";
-    //         break;
-    //     case "02":
-    //         month = "FEB";
-    //         break;
-    //     case "03":
-    //         month = "MAR";
-    //         break;
-    //     case "04":
-    //         month = "APR";
-    //         break;
-    //     case "05":
-    //         month = "MAY";
-    //         break;
-    //     case "06":
-    //         month = "JUN";
-    //         break;
-    //     case "07":
-    //         month = "JUL";
-    //         break;
-    //     case "08":
-    //         month = "AUG";
-    //         break;
-    //     case "09":
-    //         month = "SEP";
-    //         break;
-    //     case "10":
-    //         month = "OCT";
-    //         break;
-    //     case "11":
-    //         month = "NOV";
-    //         break;
-    //     case "12":
-    //         month = "DEC";
-    //         break;
-    //     default:
-    //         month = "JAN";
-    //         break;
-    // }
-    // let resultDate = "" + day + "-" + month + "-" + year;
-    //console.log(resultArray);
     return resultArray;
 }
 
@@ -199,14 +156,11 @@ function getAvgVolume() {
     const messageElement = document.getElementById("message");
     let dates = [];
     dates = dateConverterArray(document.querySelector("#StartDate").value);
-    console.log(dates);
     const form = {
         Symbol: document.querySelector("#searchName").value,
-        BeginDate: dates[0],
-        EndDate: dates[12]
+        BeginDate: dateConverter(document.querySelector("#StartDate").value),
+        EndDate: dateConverter(document.querySelector("#EndDate").value)
     };
-    console.log(form);
-    let volData = [];
     fetch("http://localhost:8080/api/v1/stockPrices/averageVolume", {
             method: "POST",
             headers: {
@@ -223,127 +177,6 @@ function getAvgVolume() {
         .catch((err) => {
             console.log(err);
         });
-    for (let i = 0; i < 12; ++i) {
-        fetch("http://localhost:8080/api/v1/stockPrices/averageVolume", {
-            method: "POST",
-            headers: {
-                Accept: "application/json, text/plain, */*",
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify([form.Symbol, dates[i], dates[i + 1]]),
-        })
-        .then((response) => response.json())
-        .then((data) => {
-            console.log(data);
-            volData.push(data);
-        })
-        .catch((err) => {
-            console.log(err);
-        });
-    }
-    console.log(volData);
-    // am5.ready(function() {
-
-    //     // Create root element
-    //     // https://www.amcharts.com/docs/v5/getting-started/#Root_element
-    //     maybeDisposeRoot("chartdiv");
-    //     var root = am5.Root.new("chartdiv");
-        
-        
-    //     // Set themes
-    //     // https://www.amcharts.com/docs/v5/concepts/themes/
-    //     root.setThemes([
-    //       am5themes_Animated.new(root)
-    //     ]);
-        
-        
-    //     // Create chart
-    //     // https://www.amcharts.com/docs/v5/charts/xy-chart/
-    //     var chart = root.container.children.push(am5xy.XYChart.new(root, {
-    //       panX: false,
-    //       panY: false,
-    //       wheelX: "panX",
-    //       wheelY: "zoomX"
-    //     }));
-        
-        
-    //     // Add cursor
-    //     // https://www.amcharts.com/docs/v5/charts/xy-chart/cursor/
-    //     var cursor = chart.set("cursor", am5xy.XYCursor.new(root, {
-    //       behavior: "zoomX"
-    //     }));
-    //     cursor.lineY.set("visible", false);
-        
-    //     var date = new Date();
-    //     date.setHours(0, 0, 0, 0);
-    //     var value = 100;
-        
-    //     function generateData() {
-    //       value = Math.round((Math.random() * 10 - 5) + value);
-    //       am5.time.add(date, "month", 1);
-    //       return {
-    //         date: date.getTime(),
-    //         value: value
-    //       };
-    //     }
-        
-    //     function generateDatas(count) {
-    //       var data = [];
-    //       for (var i = 0; i < count; ++i) {
-    //         data.push(generateData());
-    //       }
-    //       return data;
-    //     }
-        
-        
-    //     // Create axes
-    //     // https://www.amcharts.com/docs/v5/charts/xy-chart/axes/
-    //     var xAxis = chart.xAxes.push(am5xy.DateAxis.new(root, {
-    //       maxDeviation: 0,
-    //       baseInterval: {
-    //         timeUnit: "month",
-    //         count: 1
-    //       },
-    //       renderer: am5xy.AxisRendererX.new(root, {}),
-    //       tooltip: am5.Tooltip.new(root, {})
-    //     }));
-        
-    //     var yAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
-    //       renderer: am5xy.AxisRendererY.new(root, {})
-    //     }));
-        
-        
-    //     // Add series
-    //     // https://www.amcharts.com/docs/v5/charts/xy-chart/series/
-    //     var series = chart.series.push(am5xy.ColumnSeries.new(root, {
-    //       name: "Series",
-    //       xAxis: xAxis,
-    //       yAxis: yAxis,
-    //       valueYField: "value",
-    //       valueXField: "month",
-    //       tooltip: am5.Tooltip.new(root, {
-    //         labelText: "{valueY}"
-    //       })
-    //     }));
-        
-        
-        
-    //     // Add scrollbar
-    //     // https://www.amcharts.com/docs/v5/charts/xy-chart/scrollbars/
-    //     chart.set("scrollbarX", am5.Scrollbar.new(root, {
-    //       orientation: "horizontal"
-    //     }));
-        
-    //     var data = generateDatas(50);
-    //     series.data.setAll(data);
-        
-        
-    //     // Make stuff animate on load
-    //     // https://www.amcharts.com/docs/v5/concepts/animations/
-    //     series.appear(1000);
-    //     chart.appear(1000, 100);
-        
-    //     }); // end am5.ready()
 };
 
 function getAvgClose() {
@@ -352,8 +185,8 @@ function getAvgClose() {
     dates = dateConverterArray(document.querySelector("#StartDate").value);
     const form = {
         Symbol: document.querySelector("#searchName").value,
-        BeginDate: dates[0],
-        EndDate: dates[12]
+        BeginDate: dateConverter(document.querySelector("#StartDate").value),
+        EndDate: dateConverter(document.querySelector("#EndDate").value)
     };
     console.log(form);
     fetch("http://localhost:8080/api/v1/stockPrices/averageClose", {
