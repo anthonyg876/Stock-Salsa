@@ -138,11 +138,26 @@
         tableEl.addEventListener("click", onDeleteRow);
     </script>
 
-    <div class="StartDateSelector">
-        <label for="StartDate">Start Date:</label>
-        <input type="date" id="StartDate" name="StartDate">
-    </div>
-    <div class="EndDateSelector">
-        <label for="endDate">End Date:</label>
-        <input type="date" id="EndDate" name="EndDate">
+    <div class="container">
+        <form class="form" id="queries" onsubmit="event.preventDefault()">
+            <div class="stockName" id="queryName">
+                <label for="search">Stock Symbol</label>
+                <input type="search" id="searchName" data-search>
+            </div>
+            <div class="StartDateSelector">
+                <label for="StartDate">Start Date:</label>
+                <input type="date" id="StartDate" name="StartDate">
+            </div>
+            <div class="EndDateSelector">
+                <label for="endDate">End Date:</label>
+                <input type="date" id="EndDate" name="EndDate">
+            </div>
+            <div class="vol-wrapper">
+                <button class="avgVolume" id="avgVolume" type="submit" onclick="getAvgVolume()">Average Volume</button>
+            </div>
+            <div class="avgClose-wrapper">
+                <button class="avgClose" id="avgClose" type="submit" onclick="getAvgClose()">Average Close</button>
+            </div>
+            <p id="message"></p>
+        </form>
     </div>
