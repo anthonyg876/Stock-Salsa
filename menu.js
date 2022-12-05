@@ -118,7 +118,7 @@ function top5DJI() {
                 cell.appendChild(cellText);
                 row.appendChild(cell);
                 const cell2 = document.createElement("td");
-                const cell2Text = document.createTextNode(sortedData[i].Growth);
+                const cell2Text = document.createTextNode((sortedData[i].Growth).toPrecision(4));
                 cell2.appendChild(cell2Text);
                 row.appendChild(cell2)
 
@@ -181,7 +181,7 @@ function losersDJI() {
                 cell.appendChild(cellText);
                 row.appendChild(cell);
                 const cell2 = document.createElement("td");
-                const cell2Text = document.createTextNode(sortedData[i].Growth);
+                const cell2Text = document.createTextNode((sortedData[i].Growth).toPrecision(5));
                 cell2.appendChild(cell2Text);
                 row.appendChild(cell2)
 
