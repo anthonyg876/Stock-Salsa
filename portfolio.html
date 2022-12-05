@@ -27,64 +27,38 @@
     <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
     <script src="portfolio.js"></script>
+    
+</div>
 
-    <!-- Stock Table -->
-    <script>
-        const formEl = document.querySelector("form");
-        const tbodyEl = document.querySelector("tbody");
-        const tableEl = document.querySelector("table");
-        function onAddWebsite(e) {
-            e.preventDefault();
-            const stockSymbol = document.getElementById("stockSymbol").value;
-            tbodyEl.innerHTML += `
-            <tr>
-                <td>${stockSymbol}</td>
-                <td><button class="deleteBtn">Delete</button></td>
-            </tr>
-        `;
-        }
+<div class="container">
+    <form class="form" id="queries" onsubmit="event.preventDefault()">
+        <div class="stockName" id="queryName">
+            <label for="search">Stock Symbol</label>
+            <input type="search" id="searchName" data-search>
+        </div>
+        <div class="StartDateSelector">
+            <label for="StartDate">Start Date:</label>
+            <input type="date" id="StartDate" name="StartDate">
+        </div>
+        <div class="EndDateSelector">
+            <label for="endDate">End Date:</label>
+            <input type="date" id="EndDate" name="EndDate">
+        </div>
+        <div class="vol-wrapper">
+            <button class="avgVolume" id="avgVolume" type="submit" onclick="getAvgVolume()">Average Volume</button>
+        </div>
+        <div class="avgClose-wrapper">
+            <button class="avgClose" id="avgClose" type="submit" onclick="getAvgClose()">Average Close</button>
+        </div>
+        <div class="prices-wrapper">
+            <button class="prices" id="prices" type="submit" onclick="priceChanges()">Price Changes</button>
+        </div>
+        <div class="percentage-wrapper">
+            <button class="percentages" id="percentages" type="submit" onclick="percentageChanges()">Percentage Changes</button>
+        </div>
+        <p id="message"></p>
+        <div class="chartdiv" id="chartdiv">
+        </div>
+    </form>
+</div>
 
-        function onDeleteRow(e) {
-            if (!e.target.classList.contains("deleteBtn")) {
-                return;
-            }
-
-            const btn = e.target;
-            btn.closest("tr").remove();
-        }
-
-        formEl.addEventListener("submit", onAddWebsite);
-        tableEl.addEventListener("click", onDeleteRow);
-    </script>
-
-    <div class="container">
-        <form class="form" id="queries" onsubmit="event.preventDefault()">
-            <div class="stockName" id="queryName">
-                <label for="search">Stock Symbol</label>
-                <input type="search" id="searchName" data-search>
-            </div>
-            <div class="StartDateSelector">
-                <label for="StartDate">Start Date:</label>
-                <input type="date" id="StartDate" name="StartDate">
-            </div>
-            <div class="EndDateSelector">
-                <label for="endDate">End Date:</label>
-                <input type="date" id="EndDate" name="EndDate">
-            </div>
-            <div class="vol-wrapper">
-                <button class="avgVolume" id="avgVolume" type="submit" onclick="getAvgVolume()">Average Volume</button>
-            </div>
-            <div class="avgClose-wrapper">
-                <button class="avgClose" id="avgClose" type="submit" onclick="getAvgClose()">Average Close</button>
-            </div>
-            <div class="prices-wrapper">
-                <button class="prices" id="prices" type="submit" onclick="priceChanges()">Price Changes</button>
-            </div>
-            <div class="percentage-wrapper">
-                <button class="percentages" id="percentages" type="submit" onclick="percentageChanges()">Percentage Changes</button>
-            </div>
-            <p id="message"></p>
-            <div class="chartdiv" id="chartdiv">
-            </div>
-        </form>
-    </div>
