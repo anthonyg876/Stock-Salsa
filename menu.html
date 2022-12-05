@@ -17,55 +17,55 @@
     </style>
 </head>
 <body>
-    <!-- Navbar -->
+<!-- Navbar -->
 <div class="w3-top">
     <nav>
         <div class="right-links">
             <a class="links" href="menu.html">Main</a>
             <a class="links" href="portfolio.html">Query Analysis</a>
-            <a class="links" href="chartpage.html">Charts</a>
-            <a class="links" href="#">Logout</a>
+            <a class="links" href="chartpage.html">Historical Data</a>
+            <a class="links" href="index.html">Logout</a>
         </div>
     </nav>
-  
+
     <!-- Navbar on small screens -->
     <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
-      <a href="#" class="w3-bar-item w3-button w3-padding-large">Portfolio</a>
-      <a href="#" class="w3-bar-item w3-button w3-padding-large">Logout</a>
+        <a href="#" class="w3-bar-item w3-button w3-padding-large">Portfolio</a>
+        <a href="#" class="w3-bar-item w3-button w3-padding-large">Logout</a>
     </div>
-  </div>
+</div>
 
-  <!-- Header -->
+<!-- Header -->
 <header class="w3-container w3-red w3-center" style="padding:128px 16px">
     <h1 class="w3-margin w3-jumbo">Stock Salsa</h1>
 </header>
-    <div class = "form-container">
-        <form class = "form" onsubmit="event.preventDefault()">
-            <button id = "display" class = "show-all-stock-data" onclick="totalTuples()">Display Total Number of Tuples</button>
-        </form>
-        <p id="totalTuples"></p>
-    </div>
-    <form class = "formIndexes" onsubmit="event.preventDefault()">
-        <div class="StartDateSelector">
-            <label for="StartDate">Start Date:</label>
-            <input type="date" id="StartDate" name="StartDate">
-        </div>
-        <div class="EndDateSelector">
-            <label for="endDate">End Date:</label>
-            <input type="date" id="EndDate" name="EndDate">
-        </div>
-        <div>
-            <button id = "display" class = "index-one" onclick="top5DJI()">Display Top 5 Performing Stocks in the DJI</button>
-        </div>
-        <div>
-            <button id = "display" class = "index-one-Losers" onclick="losersDJI()">Display Bottom 5 Performing Stocks in the DJI</button>
-        </div>
+<div class = "form-container">
+    <form class = "form" onsubmit="event.preventDefault()">
+        <button id = "display" class = "show-all-stock-data" onclick="totalTuples()">Display Total Number of Tuples</button>
     </form>
-    <div>
-        <button id = "clear" onclick="deleteTable()">Clear Table</button>
+    <p id="totalTuples"></p>
+</div>
+<form class = "formIndexes" onsubmit="event.preventDefault()">
+    <div class="StartDateSelector">
+        <label for="StartDate">Start Date:</label>
+        <input type="date" id="StartDate" name="StartDate">
     </div>
-    <script src="menu.js"></script>
+    <div class="EndDateSelector">
+        <label for="endDate">End Date:</label>
+        <input type="date" id="EndDate" name="EndDate">
+    </div>
+    <div>
+        <button id = "display" class = "index-one" onclick="top5DJI()">Display Top 5 Performing Stocks in the DJI</button>
+    </div>
+    <div>
+        <button id = "display" class = "index-one-Losers" onclick="losersDJI()">Display Bottom 5 Performing Stocks in the DJI</button>
+    </div>
+</form>
+<div>
+    <button id = "clear" onclick="deleteTable()">Clear Table</button>
+</div>
+<script src="menu.js"></script>
 </body>
-    
-    
+
+
 </html>
